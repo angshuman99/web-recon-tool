@@ -1,5 +1,3 @@
-Certainly! Here's an updated README with your provided email:
-
 # WebRecon - Website Information Tool
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/angshuman99/web-recon-tool/blob/main/LICENSE)
