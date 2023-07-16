@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 def print_ascii_art():
     print(f"{Fore.GREEN}{Style.BRIGHT}WebRecon - Website Information Tool")
     print(f"Author: {Fore.YELLOW}Angshuman Phonglo 🎸{Style.RESET_ALL}")
-    print(f"{Fore.RED}{Style.BRIGHT}'''''")
+    print(f"{Fore.RED}'''''")
     print(f" __   __  ___   _______   _______     _______     _______    ______       ______     _____  ___   ")
     print(f"|\"  |/  \|  \"| /\"     \"| |   _  \"\   /\"      \   /\"     \"|  /\" _  \"\     /    \" \   (\"\"   \|  \"\ ")
     print(f"|'  /    \:  |(: ______) (. |_)  :) |:        | (: ______) (: ( \___)   // ____  \  |.\\   \\    |")
