@@ -1,47 +1,73 @@
-# WebRecon - Website Information Tool
+from colorama import Fore, Style
+import socket
+import ssl
+import requests
+import builtwith
+import whois
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/angshuman99/web-recon-tool/blob/main/LICENSE)
+def print_ascii_art():
+    print("""
+   ____                  _     ____        _   
+  / ___|_ __ _   _ _ __ | |_  / ___| _ __ (_)_ 
+ | |  _| '__| | | | '_ \| __| \___ \| '_ \| | |
+ | |_| | |  | |_| | |_) | |_   ___) | |_) | | |
+  \____|_|   \__, | .__/ \__| |____/| .__/|_|_|
+            |___/|_|              |_|        
+    """)
 
-WebRecon is a powerful open-source tool for gathering detailed information about websites. It provides insights into domain details, server information, SSL certificate details, technologies used, and more.
+def analyze_website(url):
+    try:
+        # Extract domain from the URL
+        domain = url.split("//")[-1].split("/")[0]
 
-## Installation
+        # Get IP address of the domain
+        ip_address = socket.gethostbyname(domain)
 
-1. Clone the repository: `git clone https://github.com/angshuman99/web-recon-tool.git`
-2. Install the required dependencies: `pip install -r requirements.txt`
+        # Perform SSL handshake and retrieve certificate details
+        context = ssl.create_default_context()
+        with socket.create_connection((domain, 443)) as sock:
+            with context.wrap_socket(sock, server_hostname=domain) as ssock:
+                cert = ssock.getpeercert()
+                expiry_date = cert['notAfter']
+                issuer = dict(item[0] for item in cert['issuer'])
 
-## Usage
+        # Perform a simple GET request to gather server information
+        response = requests.get(url)
+        server = response.headers.get('server')
 
-Run the following command to launch WebRecon:
+        # Use builtwith to determine the technologies used
+        tech_stack = builtwith.builtwith(url)
 
-```
-python website_info.py
-```
+        # Use whois to retrieve domain registration information
+        whois_info = whois.whois(domain)
 
-Enter the website URL when prompted, and the tool will gather and display the information.
+        # Display the gathered information
+        print(f"{Fore.GREEN}Website Information{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}Domain:{Style.RESET_ALL} {domain}")
+        print(f"{Fore.CYAN}IP Address:{Style.RESET_ALL} {ip_address}")
+        print(f"{Fore.CYAN}Server:{Style.RESET_ALL} {server}")
+        print(f"{Fore.CYAN}SSL Certificate - Expiry Date:{Style.RESET_ALL} {expiry_date}")
+        print(f"{Fore.CYAN}SSL Certificate - Issuer:{Style.RESET_ALL} {issuer}")
 
-## Features
+        print(f"{Fore.GREEN}Technologies Used{Style.RESET_ALL}")
+        for category, tech_list in tech_stack.items():
+            print(f"{Fore.CYAN}{category}:{Style.RESET_ALL} {', '.join(tech_list)}")
 
-- Retrieve domain details, IP address, server information, and SSL certificate details.
-- Identify technologies used on the website, such as web servers, font scripts, photo galleries, and more.
-- Get Whois information, including creation date and expiration date.
-- User-friendly command-line interface.
+        print(f"{Fore.GREEN}Whois Information{Style.RESET_ALL}")
+        print(f"{Fore.CYAN}Name:{Style.RESET_ALL} {whois_info.name}")
+        print(f"{Fore.CYAN}Email:{Style.RESET_ALL} {whois_info.email}")
+        print(f"{Fore.CYAN}Creation Date:{Style.RESET_ALL} {whois_info.creation_date}")
+        print(f"{Fore.CYAN}Expiration Date:{Style.RESET_ALL} {whois_info.expiration_date}")
 
-## Contributing
+    except Exception as e:
+        print(f"{Fore.RED}Error occurred: {str(e)}{Style.RESET_ALL}")
 
-Contributions are welcome! If you find any issues or have suggestions for improvements, please open an issue or submit a pull request.
+def main():
+    print_ascii_art()
+    print(f"{Fore.GREEN}WebRecon - Website Information Tool")
+    print(f"Author: Angshuman Phonglo{Style.RESET_ALL}\n")
+    url = input("Enter the website URL: ")
+    analyze_website(url)
 
-## License
-
-This project is licensed under the [MIT License](https://github.com/angshuman99/web-recon-tool/blob/main/LICENSE).
-
-## Contact
-
-For any questions or feedback, feel free to reach out to the author:
-- Name: Angshuman Phonglo
-- Email: barman3299@gmail.com
-
-## Documentation
-
-Detailed documentation and usage examples can be found in the [Wiki](https://github.com/angshuman99/web-recon-tool/wiki).
-
-Enjoy using WebRecon for your website information gathering needs!
+if __name__ == "__main__":
+    main()
