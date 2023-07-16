@@ -7,16 +7,17 @@ import whois
 from bs4 import BeautifulSoup
 
 def print_ascii_art():
-    print(f"{Fore.RED}")
-    print(" __   __  ___   _______   _______     _______     _______    ______       ______     _____  ___   ")
-    print("|\"  |/  \|  \"| /\"     \"| |   _  \"\   /\"      \   /\"     \"|  /\" _  \"\     /    \" \   (\"\"   \|  \"\  ")
-    print("|'  /    \:  |(: ______) (. |_)  :) |:        | (: ______) (: ( \___)   // ____  \  |.\\\\   \    | ")
-    print("|: /'        | \/    |   |:     \/  |_____/   )  \/    |    \/ \       /  /    ) :) |: \.   \\\\  | ")
-    print("\\//  /\\'    | // ___)_  (|  _  \\\\   //      /   // ___)_   //  \\ _   (: (____/ //  |.  \\    \\. | ")
-    print("/   /  \\\\   |(:      \"| |: |_)  :) |:  __   \  (:      \"| (:   _) \\   \\        /   |    \\    \\ | ")
-    print("|___/    \\___| \\_______) (_______/  |__|  \\___)  \\_______)  \\_______)   \\\"_____/     \\___|\\____\\) ")
-    print("                                                                                                  ")
-    print(f"{Style.RESET_ALL}")
+    print(f"{Fore.GREEN}{Style.BRIGHT}WebRecon - Website Information Tool")
+    print(f"Author: {Fore.YELLOW}Angshuman Phonglo 🎸{Style.RESET_ALL}")
+    print(f"{Fore.RED}{Style.BRIGHT}'''''")
+    print(f" __   __  ___   _______   _______     _______     _______    ______       ______     _____  ___   ")
+    print(f"|\"  |/  \|  \"| /\"     \"| |   _  \"\   /\"      \   /\"     \"|  /\" _  \"\     /    \" \   (\"\"   \|  \"\ ")
+    print(f"|'  /    \:  |(: ______) (. |_)  :) |:        | (: ______) (: ( \___)   // ____  \  |.\\   \\    |")
+    print(f"|: /'        | \/    |   |:     \/  |_____/   )  \/    |    \/ \       /  /    ) :) |: \.   \\  |")
+    print(f" \//  /\'    | // ___)_  (|  _  \   //      /   // ___)_   //  \ _   (: (____/ //  |.  \    \. |")
+    print(f" /   /  \\   |(:      \"| |: |_)  :) |:  __   \  (:      \"| (:   _) \   \        /   |    \    \ |")
+    print(f"|___/    \___| \_______) (_______/  |__|  \___)  \_______)  \_______)   \"_____/     \___|\____\)")
+    print(f"'''''{Style.RESET_ALL}")
 
 def extract_website_info(url):
     response = requests.get(url)
@@ -82,7 +83,7 @@ def analyze_website(url):
         print(f"{Fore.CYAN}Domain:{Style.RESET_ALL} {domain}")
         print(f"{Fore.CYAN}IP Address:{Style.RESET_ALL} {ip_address}")
         print(f"{Fore.CYAN}Server:{Style.RESET_ALL} {server}")
-        print(f"{Fore.CYAN}SSL Certificate - Expiry Date:{Style.RESET_ALL} {expiry_date}")
+        print(f"{Fore.CYAN}SSL Certificate - Expiry Date:{Style.RESET_ALL} ({expiry_date})")
         print(f"{Fore.CYAN}SSL Certificate - Issuer:{Style.RESET_ALL} {issuer}")
 
         print(f"\n{Fore.GREEN}Technologies Used{Style.RESET_ALL}")
@@ -95,17 +96,16 @@ def analyze_website(url):
         print(f"{Fore.CYAN}Name:{Style.RESET_ALL} {whois_info.name}")
         print(f"{Fore.CYAN}Email:{Style.RESET_ALL} {whois_info.email}")
         print(f"{Fore.CYAN}Creation Date:{Style.RESET_ALL} {whois_info.creation_date}")
-        print(f"{Fore.CYAN}Expiration Date:{Style.RESET_ALL} {whois_info.expiration_date}")
+        print(f"{Fore.CYAN}Expiration Date:{Style.RESET_ALL} ({whois_info.expiration_date})")
 
     except Exception as e:
         print(f"{Fore.RED}Error occurred: {str(e)}{Style.RESET_ALL}")
 
 def main():
     print_ascii_art()
-    print(f"{Fore.YELLOW}WebRecon - Website Information Tool{Style.RESET_ALL}")
-    print(f"{Fore.YELLOW}Author: Angshuman Phonglo 🎸{Style.RESET_ALL}")
     url = input("Enter the website URL: ")
     analyze_website(url)
+    print("\n")
     extract_website_info(url)
 
 if __name__ == "__main__":
